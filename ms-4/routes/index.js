@@ -710,7 +710,19 @@ router.get('/customerorder/:id', function(req, res, next) {
 	});	
    });
 
-
+router.post('/driver-order',(req,res,next)=>{
+	console.log(req.body,"their");
+	let Orderlist = req.body.orders;
+	console.log(Orderlist)
+	orderModel.find({_id:Orderlist},(err,data)=>{
+		if(!err){
+			response = {"error" : false,"message" : data};
+		}else{
+			response = {"error" : true,"message" : "Error fetching data"};
+		}
+		res.json(response);
+	})
+});
 router.post('/order',function(req, res){
  	var response={};
     var order = new orderModel(req.body);
