@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 var ejs = require('ejs');
 
-var emailFrom = 'no_reply@mealdaay.com';
+var emailFrom = 'admin@caterdaay.com';
 
 var templateDir = __dirname + '/../email_template';
 // var templateDir = '../ms-2/email_template';
@@ -9,8 +9,8 @@ var templateDir = __dirname + '/../email_template';
 var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
-    user: "no-reply@mealdaay.com",
-    password: "MealDaay123$",
+    user: "admin@caterdaay.com",
+    password: "zyumuxfxjvwkoobb",
     secure: true,
     pool: true,
   };
@@ -31,7 +31,7 @@ module.exports = {
     emailPromotionalShoot: function(subscriberID,emailTo, mailobject){
 
         ejs.clearCache();
-        imageUrl="https://mealdaay.com/assets/image/Logo1.png";
+        imageUrl="https://Caterdaay.com/assets/image/Logo1.png";
         // rendering html template (same way can be done for subject, text)
        ejs.renderFile(templateDir + '/promotional.ejs', {subscriberID,mailobject,emailTo,imageUrl},
             function(err, data) {
@@ -42,7 +42,7 @@ module.exports = {
                 var options = {
                     from: emailFrom,
                     to: emailTo,
-                    subject: 'MealDaay - Deals',
+                    subject: 'Caterdaay - Deals',
                     html: data,
                 };
                  sendmail(options);

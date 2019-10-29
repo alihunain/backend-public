@@ -771,7 +771,20 @@ router.put('/order/:id',function(req, res){
 	        }
 	        res.json(response);
         });
-       });
+	   });
+	   
+	   router.put('/orderStatus/:id',function(req, res){
+		var response={};
+		orderModel.findByIdAndUpdate(req.params.id, req.body, function(err, order) {
+				if(err) {
+					response = {"error" : true,"message" : err};
+				} else {
+					response = {"error" : false,"message" : "Data Update"};
+				}
+				res.json(response);
+			});
+		   });
+		   
 
 
 

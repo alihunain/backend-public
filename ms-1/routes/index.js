@@ -29,18 +29,28 @@ router.get('/date',function (req,res,next){
 });
 router.post('/login', function(req, res, next) {
 	req.body.username = req.body.username.toLowerCase();
+	req.body.email = req.body.username.toLowerCase();
 	console.log(req.body);
 	ownerModel.find({ username: req.body.username.toLowerCase()},(err,ownerModel)=> {
+	
 		if (err) {
 			res.json({error:true, data: err});
 		}else{
-			if(ownerModel && ownerModel.length > 0){
-				passport.authenticate('local', (err, user, info) => {
-					console.log("login")
-                    if (err) { return next(err); }
-                    if (user) {
 
+			if(ownerModel && ownerModel.length > 0){
+				
+				passport.authenticate('local', (err, user, info) => {
+					console.log(user);
+					if (err) { return next(err); }
+					
+                    if (user) {
 						kitchenModel.find({ownerId: user._id}).populate('ownerId').exec(function(err, data){
+							console.log("this")
+							console.log("this")
+							console.log("this")
+							console.log("this")
+							console.log("this")
+							console.log(data);
 							if(err){
 								res.json({status:false, data: 'error', type:'owner'});
 							}
@@ -48,6 +58,7 @@ router.post('/login', function(req, res, next) {
 
 								authenticate.GetLoginData(user,data[0]).then(function (token) {
 									console.log("login sucessfully")
+									console.log(data[0]);
 									res.json({status:true, data: data[0], token:token.token,type:'owner'});
                                     // res.json({error: false, status:true,data: data[0],token:token.token,type:'owner',message:"Successfully  login"});
                                   }).catch(err => {
@@ -87,7 +98,18 @@ router.post('/login', function(req, res, next) {
 		}
 	}
 )});
+router.post('/kitchentax',(req,res)=>{
+	console.log(req.body);
+	
+	kitchenModel.update({},req.body,(err,write)=>{
+		if(err){
+			res.json({error:true,message:err});
+		}else{
+			res.json({error:false,message:'OK'});
+		}
+	})
 
+})
 router.post('/owner/forget-password',function(req,res,next){
     var response={};
     ownerModel.find({email:req.body.email},function(err,data){
@@ -181,22 +203,34 @@ router.post('/owner',function(req, res){
  //        });
  //    }
 
-
+console.log(req.body);
  var response = {};
- req.body.username = req.body.username.toLowerCase();
+ let username = req.body.username;
+ req.body.username = req.body.email.toLowerCase();
  password = req.body.password;
+
  console.log(password);
  ownerModel.register(new ownerModel(req.body), 
  req.body.password, (err, user) => {
+
 		 if(err) {
 			 response = {"error": true, "message": err};
 			 res.json(response)
  }
 	 else {
 		 passport.authenticate('local')(req, res, () => {
-		   
-			 response = {"error": false, "message": "Owner Added Successfully"};
-			 res.json(response)
+			
+			var kitchen = new kitchenModel({ownerId:user._id});
+			kitchen.save(function(err,data){
+				console.log("hit");
+			    console.log(data,"data")
+				emails.emailShoot(req.body.email,username,data._id);
+				response = {"error": false, "message": "Owner Added Successfully"};
+				res.json(response)
+			});
+					
+			
+	
   });
   }
 });
@@ -278,6 +312,7 @@ if(err){
 	}else{
 		ownerModel.setPassword(req.body.password, function(){
 			ownerModel.save();
+			
 			response = {"error" : false,"message" : "Data Update"};
 			res.json(response);
 		});

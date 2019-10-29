@@ -6,6 +6,7 @@ var emails = require('../mail/emailConfig.js');
 
     router.get('/', function(req, res, next){
         var response={};
+        
         driverModel.find({}, null, {sort:{created_at: 1 }}).exec(function(err,data){
             if (err) {
             response = {"error" : true,"message" : "Error fetching data"};
@@ -145,6 +146,7 @@ router.post('/login', function(req, res, next) {
         req.body.username = req.body.username.toLowerCase();
     }
     driverModel.find({ username:req.body.username, password:req.body.password},function(err,owner) {
+        console.log(owner);
         if (err) {
             res.json({error:true, data: err});
             }else{

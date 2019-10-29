@@ -49,12 +49,23 @@ const getToken = function (user, expiresIn) {
     });
 };
 exports.GetLoginData = function (user, kitchenData,expiry) {
-    console.log(user);
-    const userData = {
+    console.log(user._id);
+    console.log(kitchenData);
+    let userData;
+if(kitchenData == undefined){
+     userData = {
+      
+        _id: user._id
+    };
+}else{
+     userData = {
         kitchenId : kitchenData._id,
         _id: user._id
     };
+}
+    
     return new Promise((resolve, reject) => {
+
         Iron.seal(userData, config.sealpass, Iron.defaults).then((sealed) => {
             const token = getToken({
                 data: sealed

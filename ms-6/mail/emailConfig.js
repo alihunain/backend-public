@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 var ejs = require('ejs');
 var randomstring = require("randomstring");
 
-var emailFrom = 'no_reply@mealdaay.com';
+var emailFrom = "admin@caterdaay.com";
 
 var templateDir = __dirname + '/../email_template';
 //var templateDir = '../ms-3/email_template';
@@ -10,8 +10,8 @@ var templateDir = __dirname + '/../email_template';
 var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
-    user: "no-reply@mealdaay.com",
-    password: "MealDaay123$",
+    user: "admin@caterdaay.com",
+    password: "zyumuxfxjvwkoobb",
     secure: true,
     pool: true
   };
@@ -32,7 +32,7 @@ module.exports = {
 
     forgetEmailShoot: function(customer) {
         console.log(customer);
-        customer['resetPassLink'] = 'https://mealdaay.com:3004/admin/reset-password/'+customer._id;
+        customer['resetPassLink'] = 'https://caterdaay.com:3004/admin/reset-password/'+customer._id;
         // rendering html template (same way can be done for subject, text)
         var html = ejs.renderFile(templateDir + '/forgetPassword.ejs', {customer : customer},
             function(err, data) {
@@ -45,7 +45,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: customer.username,
-            subject: 'Mealdaay admin reset password',
+            subject: 'Caterdaay admin reset password',
             html: data,
             text: 'text'
         };

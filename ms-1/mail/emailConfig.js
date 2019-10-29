@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 var ejs = require('ejs');
 var randomstring = require("randomstring");
 
-var emailFrom = 'no_reply@mealdaay.com';
+var emailFrom = 'admin@caterdaay.com';
 
 var templateDir = __dirname + '/../email_template';
 // var templateDir = '../email_template';
@@ -10,8 +10,8 @@ var templateDir = __dirname + '/../email_template';
 var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
-    user: "no-reply@mealdaay.com",
-    password: "MealDaay123$",
+    user: "admin@caterdaay.com",
+    password: "zyumuxfxjvwkoobb",
     secure: true,
     pool: true
   };
@@ -33,7 +33,7 @@ module.exports = {
 
         console.log(mailobject);
         ejs.clearCache();
-        imageUrl="https://mealdaay.com/assets/image/Logo1.png";
+        imageUrl="https://Caterdaay.com/assets/image/Logo1.png";
         // rendering html template (same way can be done for subject, text)
        ejs.renderFile(templateDir + '/promotional.ejs', {mailobject,emailTo,imageUrl},
             function(err, data) {
@@ -44,7 +44,7 @@ module.exports = {
                 var options = {
                     from: emailFrom,
                     to: emailTo,
-                    subject: 'MealDaay - Chef Activation',
+                    subject: 'Caterdaay - Chef Activation',
                     html: data,
                 };
                 sendmail(options);
@@ -69,7 +69,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Chef Activation',
+            subject: 'Caterdaay - Chef Activation',
             html: data,
             text: 'text'
         };
@@ -88,7 +88,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Chef Order',
+            subject: 'Caterdaay - Chef Order',
             html: data,
             text: 'text'
         };
@@ -110,7 +110,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Menu is Setup',
+            subject: 'Caterdaay - Menu is Setup',
             html: data,
             text: 'text'
         };
@@ -134,7 +134,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Chef Order',
+            subject: 'Caterdaay - Chef Order',
             html: data,
             text: 'text'
         };
@@ -153,7 +153,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Chef Order',
+            subject: 'Caterdaay - Chef Order',
             html: data,
             text: 'text'
         };
@@ -173,7 +173,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Chef Order',
+            subject: 'Caterdaay - Chef Order',
             html: data,
             text: 'text'
         };
@@ -196,7 +196,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'MealDaay - Driver Activation',
+            subject: 'Caterdaay - Driver Activation',
             html: data,
             text: 'text'
         };
@@ -217,7 +217,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'Mealdaay Owner Referral link',
+            subject: 'Caterdaay Owner Referral link',
             html: data,
             text: 'text'
         };
@@ -242,7 +242,7 @@ module.exports = {
         var options = {
             from: emailFrom,
             to: emailTo,
-            subject: 'Mealdaay Partner Activate Account',
+            subject: 'Caterdaay Partner Activate Account',
             html: data,
             text: 'text'
         };
@@ -273,7 +273,7 @@ module.exports = {
 
     forgetEmailShoot: function(customer, type) {
 
-        customer['resetPassLink'] = 'https://mealdaay.com/owner/resetpassword/'+customer._id;
+        customer['resetPassLink'] = 'https://Caterdaay.com/owner/resetpassword/'+customer._id;
 
         // rendering html template (same way can be done for subject, text)
       ejs.renderFile(templateDir + '/forgetPassword.ejs', {customer : customer},
@@ -294,7 +294,7 @@ module.exports = {
         sendmail(options)});;
     },
     driverForgetEmailShoot: function(emailTo, username, token) {
-            var customer = {'resetPassLink': 'https://mealdaay.com/customer/driver/reset-password/'+token};
+            var customer = {'resetPassLink': 'https://Caterdaay.com/customer/driver/reset-password/'+token};
             // customer['resetPassLink'] = 'http://mealdaay.com/customer/driver/reset-password/'+token;
 
         // rendering html template (same way can be done for subject, text)

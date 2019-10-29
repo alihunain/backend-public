@@ -2,14 +2,14 @@ var nodemailer = require('nodemailer');
 var ejs = require('ejs');
 var randomstring = require("randomstring");
 
-var emailFrom = 'no-reply@mealdaay.com';
+var emailFrom = 'admin@caterdaay.com';
 
 var templateDir = __dirname + '/../email_template';
 var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
-    user: "no-reply@mealdaay.com",
-    password: "MealDaay123$",
+    user: "admin@caterdaay.com",
+    password: "zyumuxfxjvwkoobb",
     secure: true,
     pool: true,
   };
@@ -78,10 +78,10 @@ emailAdminShoot: function(emailTo, username, id, password) {
     forgetEmailShoot: function(customer, type) {
         console.log(customer);
         if (type == 'cust') {
-            customer['resetPassLink'] = 'https://mealdaay.com/customer/reset-password/'+customer._id;
+            customer['resetPassLink'] = 'https://caterdaay.com/customer/reset-password/'+customer._id;
             /*customer['resetPassLink'] = 'http://localhost:4200/customer/reset-password/'+customer._id;*/
         }else{
-            customer['resetPassLink'] = 'https://mealdaay.com/admin/reset-password/'+customer._id;
+            customer['resetPassLink'] = 'https://caterdaay.com/admin/reset-password/'+customer._id;
             /*customer['resetPassLink'] = 'http://localhost:4200/admin/reset-password/'+customer._id;*/
         }
 

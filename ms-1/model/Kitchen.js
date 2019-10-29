@@ -16,6 +16,7 @@ var KitchenSchema = new Schema({
   lat: String,
   lng: String,
   loc : {type: [Number], index: '2d'},
+  state: String,
   phoneno1: Number,
   phoneno2: Number,
   phoneno3: Number,

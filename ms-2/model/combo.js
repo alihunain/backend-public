@@ -15,7 +15,8 @@ var ComboSchema = new Schema({
     discount:{type:Number},
     min:String,
     max:String,   
-    type:String 
+    type:String ,
+    offerings:[]
 });
 
 var Combo = mongoose.model('Combo', ComboSchema);
