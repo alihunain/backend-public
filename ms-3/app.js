@@ -10,7 +10,7 @@ var authenticate = require('./auth');
 var customers = require('./routes/customer');
 require('dotenv').config();
 var routes = require('./routes/index');
-var config = require('./config')["development"];
+var config = require('./config')["staging"];
 var compression = require('compression')
 var app = express();
 

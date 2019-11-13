@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 require('dotenv').config();
-var config = require('./config')[ "development"];
+var config = require('./config')[ "staging"];
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var customers = require('./routes/customer');

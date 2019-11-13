@@ -19,7 +19,7 @@ var passport = require('passport');
 var compression = require('compression')
 var cors = require('cors');
 require('dotenv').config();
-var config = require('./config')["development"]; // process.env.NODE_ENV 
+var config = require('./config')["staging"]; // process.env.NODE_ENV 
 var app = express();
 app.use(compression())
 var multer = require('multer');

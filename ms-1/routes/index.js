@@ -626,6 +626,140 @@ router.get("/heatmaplatlng", (req, res) => {
 
 
 /*-------------------------------Start Email for successfully-----------------------------------------------------------*/
+
+router.post('/order-email-accepted',function(req,res,next){
+	var response={};
+	console.log(req.body.order);
+    kitchenModel.find({ _id : req.body.order.restaurantid  }).populate('ownerId').exec(function(err,data){
+        if (err) {
+            res.json({error: true, message: err});          
+        } else{  
+                //console.log("eml", data);      	
+            if (data.length>0) {
+            	
+            	emails.OrderAcceptedByKitchen(req.body.customeremail,req.body.customeremail,req.body.order);
+                res.json({error: false, message: 'Email send successfully.'});
+                }else{
+                res.json({error: true, message: 'It did not find any restaurant.'});
+            } 
+        };
+        }); 
+	});
+
+	router.post('/order-email-driveraccepted',function(req,res,next){
+		var response={};
+		console.log(req.body.order);
+		kitchenModel.find({ _id : req.body.order.restaurantid  }).populate('ownerId').exec(function(err,data){
+			if (err) {
+				res.json({error: true, message: err});          
+			} else{  
+					//console.log("eml", data);      	
+				if (data.length>0) {
+					for(let i = 0; i < req.body.drivers.length;i++){
+						emails.OrderDriver(req.body.drivers[i].email,req.body.drivers[i].firstname,req.body.order);
+					}
+					
+					emails.OrderAcceptedByDriver(req.body.customeremail,req.body.customeremail,req.body.order);
+					res.json({error: false, message: 'Email send successfully.'});
+					}else{
+					res.json({error: true, message: 'It did not find any restaurant.'});
+				} 
+			};
+			}); 
+		});
+		router.post('/order-email-driveronway',function(req,res,next){
+			var response={};
+			console.log(req.body.order);
+			kitchenModel.find({ _id : req.body.order.restaurantid  }).populate('ownerId').exec(function(err,data){
+				if (err) {
+					res.json({error: true, message: err});          
+				} else{  
+						//console.log("eml", data);      	
+					if (data.length>0) {
+						
+						emails.OrderDriverOnWay(req.body.customeremail,req.body.customeremail,req.body.order);
+						res.json({error: false, message: 'Email send successfully.'});
+						}else{
+						res.json({error: true, message: 'It did not find any restaurant.'});
+					} 
+				};
+				}); 
+			});
+			router.post('/order-email-delivered',function(req,res,next){
+				var response={};
+				console.log(req.body.order);
+				kitchenModel.find({ _id : req.body.order.restaurantid  }).populate('ownerId').exec(function(err,data){
+					if (err) {
+						res.json({error: true, message: err});          
+					} else{  
+							//console.log("eml", data);      	
+						if (data.length>0) {
+							
+							emails.OrderDelivered(req.body.customeremail,req.body.customeremail,req.body.order);
+							res.json({error: false, message: 'Email send successfully.'});
+							}else{
+							res.json({error: true, message: 'It did not find any restaurant.'});
+						} 
+					};
+					}); 
+				});
+	
+	
+router.post('/order-email-driveraccept',function(req,res,next){
+	var response={};
+	console.log(req.body.order);
+    kitchenModel.find({ _id : req.body.restaurantid  }).populate('ownerId').exec(function(err,data){
+        if (err) {
+            res.json({error: true, message: err});          
+        } else{  
+                //console.log("eml", data);      	
+            if (data.length>0) {
+            	
+            	emails.OrderAcceptedByDriver(req.body.customeremail,req.body.customeremail,req.body.order);
+                res.json({error: false, message: 'Email send successfully.'});
+                }else{
+                res.json({error: true, message: 'It did not find any restaurant.'});
+            } 
+        };
+        }); 
+    });
+	router.post('/order-email-driveronway',function(req,res,next){
+		var response={};
+		console.log(req.body.order);
+		kitchenModel.find({ _id : req.body.restaurantid  }).populate('ownerId').exec(function(err,data){
+			if (err) {
+				res.json({error: true, message: err});          
+			} else{  
+					//console.log("eml", data);      	
+				if (data.length>0) {
+					
+					emails.OrderDriverOnWay(req.body.customeremail,req.body.customeremail,req.body.order);
+					res.json({error: false, message: 'Email send successfully.'});
+					}else{
+					res.json({error: true, message: 'It did not find any restaurant.'});
+				} 
+			};
+			}); 
+		});
+		router.post('/order-email-driverdeliver',function(req,res,next){
+			var response={};
+			console.log(req.body.order);
+			kitchenModel.find({ _id : req.body.restaurantid  }).populate('ownerId').exec(function(err,data){
+				if (err) {
+					res.json({error: true, message: err});          
+				} else{  
+						//console.log("eml", data);      	
+					if (data.length>0) {
+						
+						emails.OrderDelivered(req.body.customeremail,req.body.customeremail,req.body.order);
+						res.json({error: false, message: 'Email send successfully.'});
+						}else{
+						res.json({error: true, message: 'It did not find any restaurant.'});
+					} 
+				};
+				}); 
+			});
+
 router.post('/order-email',function(req,res,next){
 	var response={};
 	console.log(req.body.order);

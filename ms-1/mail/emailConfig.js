@@ -75,7 +75,114 @@ module.exports = {
         };
         sendmail(options)});
     }, 
-
+    OrderAcceptedByKitchen: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/CustomerOrderAccepted.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
+    OrderDriver: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/DriverOrder.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
+    OrderAcceptedByDriver: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/CustomerOrderAcceptedDriver.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
+    OrderAcceptedByDriver: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/CustomerOrderAcceptedDriver.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
+    OrderDriverOnWay: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/CustomerOrderIsOnWay.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
+    OrderDelivered: function(emailTo, username, order) {
+        // rendering html template (same way can be done for subject, text)
+        console.log("order", order);
+         ejs.renderFile(templateDir + '/CustomerOrderIsDelivered.ejs', { username: username , token: order._id.substr(18,6), order: order},
+            function(err, data) {
+                if (err) {
+                    console.log(err);
+                }
+        //build options
+        var options = {
+            from: emailFrom,
+            to: emailTo,
+            subject: 'Caterdaay - Chef Order',
+            html: data,
+            text: 'text'
+        };
+        sendmail(options)});;
+    },
     customerOrderEmailShoot: function(emailTo, username, order) {
         // rendering html template (same way can be done for subject, text)
         console.log("order", order);
