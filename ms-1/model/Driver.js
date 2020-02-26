@@ -39,6 +39,7 @@ var DriverSchema = new Schema({
     license: String,
     country:String,   
     isactivated: {type: Number, default: 0},
+    fcmToken:[],
     kitchensallow: [{ resId: { type: Schema.Types.ObjectId, ref: 'Kitchen' }, status: {type: Boolean, default: false}}]
     });
 

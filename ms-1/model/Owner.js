@@ -9,6 +9,7 @@ var OwnerSchema = new Schema({
   ownergovids : [{"documentname": { type: String , default: ""}, "filename":{ type: String, default: ""}}],
   ownerprofilepic: String,
   owneraddress : String,
+  password:String,
   userType : {type : String , default: 'owner'},
   ownerphoneno : String,
   username: { type: String, lowercase: true, required: true, unique: true },
@@ -17,6 +18,7 @@ var OwnerSchema = new Schema({
   created_at : { type: Date, default: Date.now }, 
   updated_at : { type: Date, default: Date.now },
   ownerpoints : { type: Number, default: 15 },
+  fcmToken :[],
   image: String
 });
 

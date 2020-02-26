@@ -14,22 +14,20 @@ const config = {
         "instagramaccesstoken":"8304379885.03c8df0.91320964cca845e6bd4bcd9402aa9b74",
         "instagramuserid":"8304379885"
     },
-    "staging":{
-
-        "authSource":"admin",
-        "userdb":"admin",
-        "passworddb":"Mealdaay123!",
-        "host":"10.137.216.33",
+     "staging":{
+        "host":"10.137.159.54",
         "dbport":"27017",
         "port":"4034",
-        "username":"root",
-        "password":"",
+        "username":"mealdaay",
+        "password":"Mealdaay123$",
+        "authSource":"admin",
+        "userdb":"mealdaay",
+        "passworddb":"Mealdaay123$",
         "database":"navedkitchen3",
         "secretkey":"96848-43962-42988-92565",
-        "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx",
-        "instagramaccesstoken":"8304379885.03c8df0.91320964cca845e6bd4bcd9402aa9b74",
-        "instagramuserid":"8304379885"
-    }, 
+        "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx"
+    },
+
     "production":{
         "authSource":"admin",
         "userdb":"mealdaay",

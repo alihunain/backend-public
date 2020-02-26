@@ -302,16 +302,17 @@ router.put('/:id',function(req, res){
  //            message:'Access Denied'
  //        });
  //    }
-	var response={};
+    var response={};
+    console.log(req.body);
 	ownerModel.findByIdAndUpdate(req.params.id, req.body, function(err, owner) {
 	    	if(err) {
 	            response = {"error" : true,"message" : err};
 	        } else {
-	        	    console.log(owner);
+	        	    // console.log(owner);
 		        	kitchenModel.find({ownerId : req.params.id}).populate('ownerId').exec(function(err,data){
 		            
-		            console.log("owner");
-		            console.log(data);
+		            // console.log("owner");
+		            // console.log(data);
 
 		        	response = {"error" : false,"message" : data[0]};	
 		        	res.json(response);

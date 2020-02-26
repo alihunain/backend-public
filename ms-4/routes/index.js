@@ -470,6 +470,7 @@ function setValues(){
 
 //  setValues();
 router.post('/collectpaymentbytoken',function(req,res,next){
+
 	convergeLib.collectPaymentByToken(req.body.token, req.body.amount, req.body.custid, 'Payment for Mealdaay Order')
 	.then(function(response){
 		res.json({"error" : false,"message" : response});
@@ -684,6 +685,21 @@ router.get('/order', function(req, res, next) {
 		res.json(response);
 	});	
 });
+
+
+router.post('/pay/amount', function(req, res, next) {
+   orderModel.updateMany({restaurantid:req.body.resturantId,status:"delivered","_id":{ $in: req.body.orders }},{ $set: { paid: true } },function(err,data){
+	   if (err) {
+		   response = {"error" : true,"message" : "Error fetching data"};
+	   } else{
+		   response = {"error" : false,"message" : data};
+	   };
+	   res.json(response);
+	})
+});
+
+
+
 
 router.post('/driverorders', function(req, res, next) {
  	var response={};

@@ -12,19 +12,20 @@ const config = {
         "secretkey":"96848-43962-42988-92565",
         "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx"
     },
-    "staging":{
-        "authSource":"admin",
-        "userdb":"admin",
-        "passworddb":"Mealdaay123!",
-        "host":"localhost",
+     "staging":{
+        "host":"10.137.159.54",
         "dbport":"27017",
         "port":"4004",
-        "username":"root",
-        "password":"",
+        "username":"mealdaay",
+        "password":"Mealdaay123$",
+        "authSource":"admin",
+        "userdb":"mealdaay",
+        "passworddb":"Mealdaay123$",
         "database":"navedkitchen",
         "secretkey":"96848-43962-42988-92565",
         "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx"
-    }, 
+    },
+
     "production":{
         "authSource":"admin",
         "userdb":"mealdaay",

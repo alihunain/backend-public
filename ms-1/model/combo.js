@@ -8,6 +8,7 @@ var ComboSchema = new Schema({
     kitchenId : { type: String, required: true},
     menuId  : [{ type: Schema.Types.ObjectId, ref:'Menu', required: true}],
     description : String,
+    instructions : String,
     finalcomboprice : String,
     totalprice : String,
     image : String,

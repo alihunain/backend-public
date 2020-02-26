@@ -36,6 +36,7 @@ var KitchenSchema = new Schema({
   created_at : { type: Date, default: Date.now }, 
   updated_at : { type: Date, default: Date.now }, 
   cuisines : [],
+DeliveryCharges : { type : Number,default:0},
   activestatus : {type : Boolean, default: false},
   cancelPolicy: String,
   reschedulingPolicy: String,

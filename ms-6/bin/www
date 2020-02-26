@@ -3,14 +3,11 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
-var debug = require('debug')('securityuri:server');
-var http = require('http');
-var config = require('../config')["development"];
-
-
 const fs = require('fs');
+var app = require('../app');
+var debug = require('debug')('naved2:server');
+ var http = require('http');
+var config = require('../config') ["development"];
 // var https = require('https');
 //  const privateKey = fs.readFileSync('/etc/nginx/ssl/mealdaay.com.key', 'utf8');
 //  const certificate = fs.readFileSync('/etc/nginx/ssl/ServerCertificate.cer', 'utf8');
@@ -19,29 +16,21 @@ const fs = require('fs');
 
 /*var credentials = {key: privateKey, cert: certificate};*/
 
-const credentials = {
-  secureOptions: require('constants').SSL_OP_NO_TLSv1,
-  //  key: privateKey,
-  //  cert: certificate,
-  // ca: chainFile,
-  passphrase: 'Mealdaay123',
-  requestCert: false,
-  rejectUnauthorized: false
-};
+ const credentials = {
+   secureOptions: require('constants').SSL_OP_NO_TLSv1,
+  // key: privateKey,
+  // cert: certificate,
+ // ca: chainFile,
+   passphrase: 'Mealdaay123',
+   requestCert: false,
+   rejectUnauthorized: false
+ };
 
 
-/*SSLCertificateFile /etc/httpd/ssl/mealdaay.crt
-SSLCertificateKeyFile /etc/httpd/ssl/mealdaay.key
-SSLCertificateChainFile /etc/httpd/ssl/mealdaay-int.crt*/
-
-/*const httpsServer = https.createServer(credentials, app);*/
-
-
-
-
-
-
-
+/*SSLCertificateFile /etc/nginx/ssl/mealdaay.crt
+SSLCertificateKeyFile /etc/nginx/ssl/mealdaay.key
+SSLCertificateChainFile /etc/nginx/ssl/mealdaay-int.crt*/
+// const httpsServer = https.createServer(credentials, app);
 
 /**
  * Get port from environment and store in Express.
@@ -54,8 +43,8 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
 //  var server = https.createServer(credentials, app);
+ var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

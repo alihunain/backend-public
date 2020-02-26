@@ -16,6 +16,7 @@ var CustomerSchema = new Schema({
   status: { type: Boolean, default: false },
   customerpoints : { type: Number, default: 15 },
   customerfavrestro : [],
+  fcmToken:[],
   /*timezone: String,*/
   profilePic: String,
   accounttype: {type: String, default: 'customer'},

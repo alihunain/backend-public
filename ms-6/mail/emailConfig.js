@@ -11,7 +11,7 @@ var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
     user: "admin@caterdaay.com",
-    password: "zyumuxfxjvwkoobb",
+    password: "@dm1nCat3rdaay",
     secure: true,
     pool: true
   };
@@ -32,7 +32,7 @@ module.exports = {
 
     forgetEmailShoot: function(customer) {
         console.log(customer);
-        customer['resetPassLink'] = 'https://caterdaay.com:3004/admin/reset-password/'+customer._id;
+        customer['resetPassLink'] = 'https://beta.caterdaay.com/admin/reset-password/'+customer._id;
         // rendering html template (same way can be done for subject, text)
         var html = ejs.renderFile(templateDir + '/forgetPassword.ejs', {customer : customer},
             function(err, data) {

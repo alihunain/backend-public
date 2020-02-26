@@ -13,18 +13,19 @@ const config = {
         "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx"
     },
     "staging":{
-        "host":"10.137.224.233",
+        "host":"10.137.159.54",
         "dbport":"27017",
         "port":"4014",
-        "username":"root",
-        "password":"",
+        "username":"mealdaay",
+        "password":"Mealdaay123$",
         "authSource":"admin",
-        "userdb":"admin",
-        "passworddb":"Mealdaay123!",
+        "userdb":"mealdaay",
+        "passworddb":"Mealdaay123$",
         "database":"navedkitchen1",
         "secretkey":"96848-43962-42988-92565",
         "sealpass":"YyjtEzbGFLlpGLbtT0NnykqBAPFyWnSx"
-    }, 
+    },
+
     "production":{
         "host":"db.mealdaay.com",
         "dbport":"27017",

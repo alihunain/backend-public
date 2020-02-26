@@ -11,7 +11,7 @@ var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
     user: "admin@caterdaay.com",
-    password: "zyumuxfxjvwkoobb",
+    password: "@dm1nCat3rdaay",
     secure: true,
     pool: true
   };
@@ -77,7 +77,7 @@ module.exports = {
     }, 
     OrderAcceptedByKitchen: function(emailTo, username, order) {
         // rendering html template (same way can be done for subject, text)
-        console.log("order", order);
+        // console.log("order", order);
          ejs.renderFile(templateDir + '/CustomerOrderAccepted.ejs', { username: username , token: order._id.substr(18,6), order: order},
             function(err, data) {
                 if (err) {
@@ -185,9 +185,10 @@ module.exports = {
     },
     customerOrderEmailShoot: function(emailTo, username, order) {
         // rendering html template (same way can be done for subject, text)
-        console.log("order", order);
+      
          ejs.renderFile(templateDir + '/customerOrder.ejs', { username: username , token: order._id.substr(18,6), order: order},
             function(err, data) {
+                console.log("working");
                 if (err) {
                     console.log(err);
                 }
@@ -267,8 +268,9 @@ module.exports = {
         sendmail(options)    });
     }, 
     restroOrderEmailShoot: function(emailTo, username, order) {
-        console.log("order", order);
+        // console.log("order", order);
         // rendering html template (same way can be done for subject, text)
+        console.log("workingggggggggggggggg");
         ejs.renderFile(templateDir + '/restroOrder.ejs', { username: username , token: order._id.substr(18,6), order: order},
             function(err, data) {
                 if (err) {
@@ -380,7 +382,7 @@ module.exports = {
 
     forgetEmailShoot: function(customer, type) {
 
-        customer['resetPassLink'] = 'https://Caterdaay.com/owner/resetpassword/'+customer._id;
+        customer['resetPassLink'] = 'https://app.caterdaay.com/owner/resetpassword/'+customer._id;
 
         // rendering html template (same way can be done for subject, text)
       ejs.renderFile(templateDir + '/forgetPassword.ejs', {customer : customer},

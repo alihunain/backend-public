@@ -14,6 +14,7 @@ var OrderSchema = new Schema({
     items: [],
     package: [],
     paymenttype: String,
+    driverinst:String,
     deliveryCharges: Number,
     total: Number,
     subtotal: Number,
@@ -24,10 +25,12 @@ var OrderSchema = new Schema({
     cardinfo: Object,
     status: { type: String, default: 'received' },
     created_at: { type: Date },
+caterdaaycharges:{type:Number,default:0},
     cardPaidStatus: Object,
     timezone: String,
     menuStatus: { type: Boolean, default: false },
-    currency: String
+    currency: String,
+    paid:{ type:Boolean,default:false}
 });
 
 var Order = mongoose.model('Order', OrderSchema);

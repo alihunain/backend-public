@@ -271,7 +271,8 @@ router.put('/changepassword/:id',function(req,res){
     });
 });
 router.put('/:id',function(req, res){
-    console.log(req.body);
+    console.log(req.body,req.params.id);
+
     var response={};
     Customer.findByIdAndUpdate(req.params.id, req.body, function(err, owner) {
             if(err) {
@@ -279,6 +280,7 @@ router.put('/:id',function(req, res){
             } else {
                 response = {"error" : false,"message" : "Data Update"};
             }
+		console.log(owner);
             res.json(response);
         });
 });

@@ -9,7 +9,7 @@ var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
     user: "admin@caterdaay.com",
-    password: "zyumuxfxjvwkoobb",
+    password: "@dm1nCat3rdaay",
     secure: true,
     pool: true,
   };
@@ -77,6 +77,7 @@ emailAdminShoot: function(emailTo, username, id, password) {
 
     forgetEmailShoot: function(customer, type) {
         console.log(customer);
+        console.log('https://caterdaay.com/customer/reset-password/'+customer._id);
         if (type == 'cust') {
             customer['resetPassLink'] = 'https://caterdaay.com/customer/reset-password/'+customer._id;
             /*customer['resetPassLink'] = 'http://localhost:4200/customer/reset-password/'+customer._id;*/

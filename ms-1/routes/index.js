@@ -9,15 +9,201 @@ var partnerModel  =  require("../model/Partner.js");
 var passport = require('passport');
 var emails = require('../mail/emailConfig.js');
 var authenticate = require('../auth');
-
+var path = require('path')
+var fcm = require('fcm-notification');
 var options = {
   	provider: 'google',
   	httpAdapter: 'https', // Default 
   	apiKey: null, // for Mapquest, OpenCage, Google Premier 
   	formatter: null         // 'gpx', 'string', ... 
 };
- 
+var appDir  = path.resolve(__dirname);appDir = appDir + "/../"
 var geocoder = NodeGeocoder(options);
+// FCM Notification Api
+router.get('/test',(req,res)=>{
+	console.log(appDir);
+	
+	res.send(appDir);
+}
+)
+var FCM = new fcm(appDir + "orderapp-e993a-firebase-adminsdk-5noct-c58394007a.json");
+
+router.post('/notifications',(req,res)=>{
+	let userid = req.body.userid;
+	let chefid = req.body.chefid;
+	let driverid = req.body.driverid;
+	let type = req.body.type;
+	let orderId = req.body.orderId;
+	let expire = new Array();
+	let jsonPath = "ownerAdminKey";
+	let response = {
+	   drivertoken:[],
+	   usertoken:[],
+	   ownertoken:[]			
+	}
+	if(type == "user"){
+		let title = "New Order";
+		let message = "You Recieved A New Order "+ orderId.substr(18,6) ;
+	
+		NotificationTemplate(req.body.tokens,title,message,jsonPath,expire,chefid,orderId).then((expire)=>{
+			response.ownertoken = expire;
+			res.json({status:false,message:response});
+		})
+	}else if(type == "chef"){
+		if(req.body.status =="accepted"){
+		let title = "New Order";
+		let message = "You Recieved A New Order " + orderId.substr(18,6) + " To Deliver";
+	
+		console.log("worked");
+		NotificationTemplate(req.body.tokensdriver,title,message,jsonPath,expire,driverid,orderId).then((expire)=>{
+			response.drivertoken = expire;
+			console.log("worked2");
+			let title = "Order Update";
+			let message = "Your Order Has Been Accepted By Resturant " + orderId.substr(18,6);
+	       
+			NotificationTemplate(req.body.tokencustomer,title,message,jsonPath,expire,userid,orderId).then((expire)=>{
+				response.usertoken = expire;
+				res.json({status:false,message:response});
+			})
+		})
+	}else if(req.body.status =="rejected"){
+		let title = "Order Update";
+			let message = "Your Order Has Been Rejected By Resturant " + orderId.substr(18,6);
+			NotificationTemplate(req.body.tokens,title,message,jsonPath,expire,userid,orderId).then((expire)=>{
+				response.usertoken = expire;
+				res.json({status:false,message:response});
+			})
+	}
+}else if(type == "driver"){
+	if(req.body.status =="accepted"){
+	let title = "Order Update";
+	let message = "Your order will be delivered as scheduled by you. " + orderId.substr(18,6);
+   
+	NotificationTemplate(req.body.tokenscustomer,title,message,jsonPath,expire,userid,orderId).then((expire)=>{
+		response.usertoken = expire;
+	let title = "Order Update";
+	let message = "Driver Accepted The Order " + orderId.substr(18,6);
+	NotificationTemplate(req.body.tokenschef,title,message,jsonPath,expire,chefid,orderId).then((expire)=>{
+		response.ownertoken = expire;
+		res.json({status:false,message:response});
+	 })
+	})
+
+   }else if(req.body.status =="ontheway"){
+	let title = "Order Update";
+	let message = "Driver is on the way " + orderId.substr(18,6);
+
+	NotificationTemplate(req.body.tokenscustomer,title,message,jsonPath,expire,userid,orderId).then((expire)=>{
+		response.usertoken = expire;
+	let title = "Order Update";
+	let message = "Driver is on the way " + orderId.substr(18,6);
+	NotificationTemplate(req.body.tokenschef,title,message,jsonPath,expire,chefid,orderId).then((expire)=>{
+		response.ownertoken = expire;
+		res.json({status:false,message:response});
+	 })
+	})
+
+   }else if(req.body.status =="delivered"){
+	let title = "Order Update";
+	let message = "You Order has been delivered " + orderId.substr(18,6);
+
+	NotificationTemplate(req.body.tokenscustomer,title,message,jsonPath,expire,userid,orderId).then((expire)=>{
+		response.usertoken = expire;
+	let title = "Order Update";
+	let message = "Order has been delivered " + orderId.substr(18,6);
+	NotificationTemplate(req.body.tokenschef,title,message,jsonPath,expire,chefid,orderId).then((expire)=>{
+		response.ownertoken = expire;
+		res.json({status:false,message:response});
+	 })
+	})
+
+   }
+}
+})
+
+function NotificationTemplate (tokens,title,content,securepath,expire,id,orderId){
+	return new Promise((resolve,reject)=>{
+		if(tokens.length==0){
+			resolve([]);
+		}
+		console.log(id.constructor === Array)
+		if(!(id.constructor === Array)){
+			var message = {
+				notification:{
+					title : title,
+					body : content,
+				},data: {    //This is only optional, you can send any data
+					_id:id,
+					message:content,
+					orderId:orderId,
+				},
+				
+     android:{
+       notification:{
+		 "click_action":"FCM_PLUGIN_ACTIVITY",
+		 "sound":"default"
+       }
+	 },apns: {
+					payload: {
+					  aps: {
+						"click_action":"FCM_PLUGIN_ACTIVITY",
+						"sound":"default"
+					  },
+					},
+				  },
+			   
+			
+			};
+		}else{
+		var message = {
+			notification:{
+				title : title,
+				body : content,
+				
+			
+			},data: {    //This is only optional, you can send any data
+		
+				message:content,
+				orderId:orderId,
+				// "click_action":"FCM_PLUGIN_ACTIVITY",
+			},
+			android:{
+				notification:{
+				  "click_action":"FCM_PLUGIN_ACTIVITY"
+				}
+			  }, ios: {
+				alert: true,
+				badge: true,
+				sound: true,
+				clearBadge: true
+			}
+		};
+		
+	}
+		FCM.sendToMultipleToken(message,tokens, function(err, response) {
+			console.log(response);
+			if(err){
+				   console.log('error');
+			}else {
+				let Result = new Array();
+				for(let i =0; i < response.length;i++){
+					if(response[i].response.includes("Successfully")){
+						Result.push(response[i].token);
+					}
+					if(i+1 == response.length){
+						console.log(Result);
+						resolve(Result);
+					}
+				}
+			
+		
+			}
+			
+		})
+		
+	})
+}
+
 
 /* GET home kitchen. */
 router.get('/', function(req, res, next) {
@@ -100,8 +286,9 @@ router.post('/login', function(req, res, next) {
 )});
 router.post('/kitchentax',(req,res)=>{
 	console.log(req.body);
+console.log(req.body.tax);
 	
-	kitchenModel.update({},req.body,(err,write)=>{
+	kitchenModel.updateMany({},req.body,(err,write)=>{
 		if(err){
 			res.json({error:true,message:err});
 		}else{
@@ -224,7 +411,7 @@ console.log(req.body);
 			kitchen.save(function(err,data){
 				console.log("hit");
 			    console.log(data,"data")
-				emails.emailShoot(req.body.email,username,data._id);
+				emails.emailShoot(req.body.email,username,user._id);
 				response = {"error": false, "message": "Owner Added Successfully"};
 				res.json(response)
 			});
@@ -281,7 +468,7 @@ router.post('/kitchen',function(req, res){
 });
 
 router.put('/owner/:id',function(req, res){
-
+	console.log("Here");
  // if (!req.isAuthenticated()) {
  //        return res.status(200).json({
  //            status: false,
@@ -291,10 +478,14 @@ router.put('/owner/:id',function(req, res){
 
 	var response={};
 	req.body.status = true;
+console.log(req.body);
+console.log(req.params.id);
+
 	ownerModel.findByIdAndUpdate(req.params.id, req.body, function(err, kitchen) {
 	    	if(err) {
 	            response = {"error" : true,"message" : err};
 	        } else {
+console.log(kitchen);
 	            response = {"error" : false,"message" : "Data Update"};
 	        }
 	        res.json(response);
@@ -329,6 +520,7 @@ router.put('/change-password/:id',function(req, res){
 			}else{
 			if(ownerModel){
 				ownerModel.setPassword(req.body.password, function(){
+					ownerModel.password = req.body.password;
 					ownerModel.save();
 					kitchenModel.find({ownerId : req.params.id}).populate('ownerId').exec(function(err,data){
 						response = {"error" : false,"message" : data[0]};	
@@ -351,6 +543,7 @@ router.put('/kitchen/:id',function(req, res){
        req.body.city = req.body.city.toLowerCase();
        req.body.country = req.body.country.toLowerCase();
     }
+console.log(req.body.DeliveryCharges,"deliverychages found");
 	kitchenModel.findByIdAndUpdate({_id : req.params.id}, req.body, function(err, kitchen) {
     	if(err) {
             response = {"error" : true,"message" : err};
@@ -629,12 +822,13 @@ router.get("/heatmaplatlng", (req, res) => {
 
 router.post('/order-email-accepted',function(req,res,next){
 	var response={};
-	console.log(req.body.order);
+	// console.log(req.body.order);
     kitchenModel.find({ _id : req.body.order.restaurantid  }).populate('ownerId').exec(function(err,data){
         if (err) {
             res.json({error: true, message: err});          
         } else{  
-                //console.log("eml", data);      	
+				//console.log("eml", data); 
+				console.log(data.length);     	
             if (data.length>0) {
             	
             	emails.OrderAcceptedByKitchen(req.body.customeremail,req.body.customeremail,req.body.order);
@@ -655,9 +849,7 @@ router.post('/order-email-accepted',function(req,res,next){
 			} else{  
 					//console.log("eml", data);      	
 				if (data.length>0) {
-					for(let i = 0; i < req.body.drivers.length;i++){
-						emails.OrderDriver(req.body.drivers[i].email,req.body.drivers[i].firstname,req.body.order);
-					}
+				
 					
 					emails.OrderAcceptedByDriver(req.body.customeremail,req.body.customeremail,req.body.order);
 					res.json({error: false, message: 'Email send successfully.'});
@@ -762,12 +954,13 @@ router.post('/order-email-driveraccept',function(req,res,next){
 
 router.post('/order-email',function(req,res,next){
 	var response={};
-	console.log(req.body.order);
+	// console.log(req.body.order);
     kitchenModel.find({ _id : req.body.restaurantid  }).populate('ownerId').exec(function(err,data){
         if (err) {
             res.json({error: true, message: err});          
         } else{  
-                //console.log("eml", data);      	
+				//console.log("eml", data);      	
+				console.log(data.length);
             if (data.length>0) {
             	emails.restroOrderEmailShoot(data[0].ownerId.email,data[0].username,req.body.order);
             	emails.customerOrderEmailShoot(req.body.customeremail,req.body.customeremail,req.body.order);

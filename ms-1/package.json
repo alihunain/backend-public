@@ -17,6 +17,7 @@
     "ejs": "^2.5.7",
     "express": "~4.13.1",
     "express-session": "^1.14.1",
+    "fcm-notification": "^2.0.0",
     "iron": "^5.0.4",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.3.0",
@@ -30,6 +31,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.5.0",
+    "path": "^0.12.7",
     "randomstring": "^1.1.5",
     "serve-favicon": "~2.3.2"
   }

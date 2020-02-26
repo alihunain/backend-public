@@ -10,7 +10,7 @@ var mailConfig = {
     host: "smtp.gmail.com",
     port: 465,
     user: "admin@caterdaay.com",
-    password: "zyumuxfxjvwkoobb",
+    password: "@dm1nCat3rdaay",
     secure: true,
     pool: true,
   };
