@@ -20,7 +20,7 @@
     "fs": "0.0.1-security",
     "iron": "^5.0.4",
     "jade": "~1.11.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^4.5.7",
     "morgan": "~1.6.1",
     "multer": "^1.2.0",
